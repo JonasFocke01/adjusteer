@@ -1,8 +1,10 @@
 #define SAMPLE_SIZE 100
-#define MILLIS_ALLOWED 10000 // The device should "beep" after this time
+#define MILLIS_ALLOWED 3600000 // The device should "beep" after this time
 
 #define trigPin 11
 #define echoPin 12
+
+#define buzzerPin 2
 
 long duration, cm;
 
@@ -15,9 +17,12 @@ void setup() {
     Serial.begin (115200);
     pinMode(trigPin, OUTPUT);
     pinMode(echoPin, INPUT);
+    pinMode(buzzerPin, OUTPUT);
 }
 
 void loop() {
+    digitalWrite(buzzerPin, HIGH);
+
     int new_sample = fetch_new_sample();
     append_new_sample(new_sample);
     int median = calculate_median();
@@ -81,5 +86,5 @@ bool check_against_old_median(int current_median){
 }
 
 void beep(){
-    // TODO
+    tone(buzzerPin, 1000000);
 }
