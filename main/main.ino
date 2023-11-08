@@ -13,8 +13,6 @@ int previous_median = 0;
 unsigned long previous_median_timestamp = millis();
 
 void setup() {
-    // TODO: Remove serial
-    Serial.begin (115200);
     pinMode(trigPin, OUTPUT);
     pinMode(echoPin, INPUT);
     pinMode(buzzerPin, OUTPUT);
@@ -30,7 +28,6 @@ void loop() {
     if (should_beep) {
         beep();
     }
-    debug_print_samples();
     delay(250);
 }
 
@@ -52,15 +49,6 @@ void append_new_sample(int sample) {
         samples[i] = samples[i + 1];
     }
     samples[SAMPLE_SIZE - 1] = sample;
-}
-
-// TODO: get rid of this
-void debug_print_samples(){
-    for (int i = 0; i < SAMPLE_SIZE; i++){
-        Serial.print(samples[i]);
-    }
-    Serial.print(check_against_old_median(calculate_median()) ? "BEEEEP" : "nothing");
-    Serial.println("\n");
 }
 
 int calculate_median() {
